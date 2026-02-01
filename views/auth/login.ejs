@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | SimpleBlog.</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5; /* Light neutral background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            background-color: #ffffff; /* White card */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Subtle black shadow */
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* New Branding Style */
+        .brand-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1a1a1a;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .login-card h2 {
+            color: #1a1a1a; /* Black text */
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .login-card p {
+            color: #666; /* Subtle gray for subtext */
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a1a; /* Black label */
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d1d1d1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* Blue focus effect */
+        .input-group input:focus {
+            outline: none;
+            border-color: #0056ff; 
+            box-shadow: 0 0 0 3px rgba(0, 86, 255, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #0056ff; /* Primary Blue */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #0041c2; /* Darker blue on hover */
+        }
+
+        .footer-links {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            color: #0056ff; /* Blue links */
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="brand-logo">SimpleBlog.</div>
+        
+        <h2>Welcome Back</h2>
+        <p>Please enter your details to sign in.</p>
+        
+        <form action="/login" method="POST" id="loginForm">
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="name@company.com" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+
+        <div class="footer-links">
+            <p>Don't have an account? <a href="/signup">Create one now</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

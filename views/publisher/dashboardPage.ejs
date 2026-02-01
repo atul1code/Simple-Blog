@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publisher Dashboard</title>
+    <style>
+        /* Base Theme */
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            color: #333;
+            background: #f4f4f4;
+        }
+
+        nav {
+            background: #fff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* Dashboard Header */
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h2 { margin: 0; font-size: 1.5rem; }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover { opacity: 0.8; }
+
+        .btn-create { background: #007bff; color: white; } /* Blue for primary action */
+        .btn-edit { background: #f0f0f0; color: #333; margin-right: 5px; border: 1px solid #ccc; }
+        .btn-remove { background: #fee2e2; color: #dc3545; border: 1px solid #fecaca; }
+
+        /* Status Badge */
+        .badge {
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 12px;
+            background: #dcfce7;
+            color: #166534;
+            font-weight: bold;
+        }
+
+        /* Posts Table */
+        .posts-list {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        th {
+            background: #fafafa;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background: #f9fafb; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .dash-header { flex-direction: column; align-items: stretch; gap: 15px; }
+            .btn-create { text-align: center; justify-content: center; }
+            th:nth-child(2), td:nth-child(2) { display: none; } /* Hide Date on mobile */
+            .btn-edit, .btn-remove { padding: 6px 10px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><strong>SimpleBlog.</strong> Publisher</div>
+        <div class="menu">
+           <form action="/logout" method="POST">
+             <button type="submit" style="text-decoration:none; color:#777; font-size: 14px; background:none; border:none; cursor:pointer; transition: opacity 0.2s;">Logout</button>
+           </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="dash-header">
+            <h2>Your Content</h2>
+            <a href="/publisher/create-post" class="btn btn-create">+ Create New Post</a>
+        </div>
+
+        <div class="posts-list">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                <% if(publishedBlog) { %>
+
+                    <% publishedBlog.forEach(blog =>  { %>
+                    <tr>
+                        <td>
+                            <strong><%= blog.title %></strong><br>
+                            <small style="color:#888"> <%= blog.category %> </small>
+                        </td>
+                        <td><span class="badge">Published</span></td>
+                        <td> <%= new Date(blog.createdAt).toDateString() %></td>
+                        <td style="text-align: right;">
+
+                          <div style =" display:flex; justify-content: flex-end; align-items: center;">
+                              <a href="/publisher/edit-post/<%= blog._id %>?editing=true" class="btn btn-edit">Edit</a>       
+                          
+                           
+                            <form action ="/publisher/delete-post/<%= blog._id %>" method = "POST" >
+                                <button class="btn btn-remove">Delete</button>
+                            </form>
+                          </div>
+
+                        </td>
+                    </tr>
+                    <% }) %>
+
+               <% } else { %>
+                      <p style="color: #007bff;">Your Blog Post show where</p>
+                 <% } %>
+                  
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
