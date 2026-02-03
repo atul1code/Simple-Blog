@@ -2,20 +2,34 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
-  "scripts": {
-    "start": "nodemon app.js"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-   
+    "bcryptjs": "^3.0.3",
+    "connect-mongo": "^6.0.0",
+    "connect-mongodb-session": "^5.0.0",
     "dotenv": "^17.2.3",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
-    "mongodb": "^7.0.0",
-    "mongoose": "^9.1.5",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.1",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.11"
-  }
+  },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atul-maurya1/Simple-Blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atul-maurya1/Simple-Blog/issues"
+  },
+  "homepage": "https://github.com/atul-maurya1/Simple-Blog#readme"
 }

@@ -141,20 +141,32 @@
         <p>Create your account to get started.</p>
         
         <form action="/signup" method="POST" id="registerForm">
+
+         <% if( errors.length > 0){ %>  
+               <div class="error-messages" style="margin-bottom: 20px; padding: 10px; border: 1px solid red; background-color: #ffe6e6;">
+                <ul style="margin: 0; padding-left: 20px; color: red;">
+                  <% errors.forEach(function(error){ %>
+                    <li style="list-style-type: disc;"><%= error %></li>
+                  <% }) %>
+                  </ul>
+                  </div>
+            <% } %>
+
+
             <div class="name-row">
                 <div class="input-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" name="firstName" id="firstName" placeholder="John" required>
+                    <input type="text" name="firstName" id="firstName" placeholder="Enter first name" required>
                 </div>
                 <div class="input-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" name="lastName" id="lastName" placeholder="Doe" required>
+                    <input type="text" name="lastName" id="lastName" placeholder="Enter last name" required>
                 </div>
             </div>
             
             <div class="input-group">
                 <label for="email">Email Address</label>
-                <input type="email" name="email" id="email" placeholder="name@company.com" required>
+                <input type="email" name="email" id="email" placeholder="user@example.com" required>
             </div>
             
             <div class="input-group">

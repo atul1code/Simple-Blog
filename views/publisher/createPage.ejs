@@ -116,6 +116,17 @@
         .btn-save:hover { background: #0069d9; }
         .btn-cancel:hover { background: #e2e2e2; }
 
+            .menu{
+            display: flex;
+            align-items: center;
+            gap: 30px
+        }
+        .menu span{
+            text-transform: capitalize;
+            color: rgb(2, 2, 122);
+            font-size: 14px;
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             .container { padding: 10px; margin-top: 10px; }
@@ -129,6 +140,7 @@
     <nav>
         <div class="logo"><strong>MyBlog</strong> Publisher</div>
         <div class="menu">
+              <span><%= user.firstName %></span>
             <a href="/publisher/publisher-dashboard" style="text-decoration:none; color:#777; font-size: 14px;">Back to Dashboard</a>
         </div>
     </nav>
@@ -143,7 +155,7 @@
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type ="hidden" name="id" value = "<%= editing ? blog._id : '' %>" > 
-                    <input type="text" id="title" name="title" value = "<%= editing ? blog.title : '' %>" placeholder="e.g. My Journey into Web Development" required>
+                    <input type="text" id="title" name="title" value = "<%= editing ? blog.title : '' %>" placeholder="Title of your blog post" required>
                 </div>
 
                 <div style="display: flex; gap: 20px; flex-wrap: wrap;">

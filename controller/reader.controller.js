@@ -12,7 +12,12 @@ export const getHomePage = (req, res , next) => {
 export const getReadBlog = (req, res, next) => {
     const blogID = req.params._id
     console.log("blog id is", blogID)
-    Blog.findById(blogID).then( (blog) =>{
+    Blog.findById(blogID).populate("publisher", "firstName").then( (blog) =>{
         res.render('../views/reader/readerPage', {blog: blog})
+    }).catch(err => {
+        console.log("error while fetching blog post at reader page  ", err)
     })
 }   
+
+
+

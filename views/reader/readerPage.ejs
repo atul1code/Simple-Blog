@@ -157,7 +157,7 @@
         <header class="post-header">
             <h1> <%= blog.title %></h1>
             <div class="meta">
-                Published on <span><%= new Date(blog.createdAt).toDateString() %> </span> • By <strong>Admin</strong>
+                Published on <span><%= new Date(blog.createdAt).toDateString() %> </span> • By <strong><%= blog.publisher.firstName %></strong>
             </div>
         </header>
 

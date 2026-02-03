@@ -1,23 +1,25 @@
 import { Blog } from "../Models/blog.models.js"
 
-export const getPublisherDashboard = (req, res, next) => {
+export const getPublisherDashboard = async (req, res, next) => {
+        const userId = req.session.user._id;
+        console.log("user id is ", userId) ;
         console.log("dashboard")
-        Blog.find().then((publishedBlog) => {
-            res.render('../views/publisher/dashboardPage', {publishedBlog: publishedBlog})
-        })
+        const myDashboard = await Blog.find({publisher: userId}).populate("publisher", "firstName")
+       
+        res.render('../views/publisher/dashboardPage', {publishedBlog: myDashboard, isLoggedIn: req.session.isLoggedIn, user: req.session.user})
         
 }
 
 export const getCreatePage = (req, res, next) => {
     console.log("get create post")
-     res.render('../views/publisher/createPage',{editing: false})
+     res.render('../views/publisher/createPage',{editing: false,  isLoggedIn:  req.session.isLoggedIn})
 
 }
 
 export const postCreatePost = (req, res, next) => { 
     console.log("post create post")
-    const {title, category, img, content,createdAt } = req.body
-    const blog = new Blog({title, category, img, content, createdAt})
+    const {title, category, img, content,createdAt ,publisher } = req.body
+    const blog = new Blog({title, category, img, content, createdAt, publisher: req.session.user._id})
     blog.save().then( () => {
         console.log("blog post saved")
     }).catch(err => {
@@ -29,13 +31,11 @@ export const postCreatePost = (req, res, next) => {
 
 export const getEditPost = (req, res, next) => {
     const blogId = req.params._id; 
-    console.log( typeof blogId)
     const editing = req.query.editing === 'true'
     
-    //console.log("editing mode", editing)
     Blog.findById(blogId).then((blog) => {
          console.log("edit post and id is ", blogId)
-         res.render('../views/publisher/createPage', {blog: blog, editing: editing, pageTitle: 'edit post'})
+         res.render('../views/publisher/createPage', {blog: blog, editing: editing, pageTitle: 'edit post', isLoggedIn:  req.session.isLoggedIn})
     }).catch( err => {
         console.log("error while fetching blog for edit ", err)
     })
@@ -52,7 +52,6 @@ export const postEditPost = (req, res, next) => {
         blog.img = img,
         blog.content = content
         blog.save().then((result) => {
-            console.log("blog post updated", result);
             res.redirect('/publisher/publisher-dashboard');
         }).catch(err =>{
             console.log("error while updating the blog post ", err)
@@ -63,7 +62,8 @@ export const postEditPost = (req, res, next) => {
 
 export const postDeletePost = (req, res, next) =>{
     const blogId = req.params._id;
-    Blog.findOneAndDelete(blogId).then (() => {
+    const publisherId = req.session.user._id;
+    Blog.findOneAndDelete({_id: blogId, publisher: publisherId}).then (() => {
         console.log("blog post deleted")
         res.redirect('/publisher/publisher-dashboard')
     }).catch( err => {

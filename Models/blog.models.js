@@ -13,7 +13,13 @@ const blogSchema = mongoose.Schema({
     },
    content: {
     type: String,
-    requird: true,
+    required: true,
+   },
+   
+   publisher: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
    },
    createdAt: {
     type: Date,
