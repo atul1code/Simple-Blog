@@ -10,6 +10,7 @@ Can view and read blog posts only
 Can create new blog posts, 
 Can update existing posts, 
 Can delete blog posts
+#Session based authentication
 
 All blog data is stored and managed using MongoDB
 
