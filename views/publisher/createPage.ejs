@@ -53,6 +53,8 @@
             margin-bottom: 20px;
         }
 
+        
+
         label {
             display: block;
             font-weight: bold;
@@ -151,7 +153,7 @@
                 <h2> <%= editing ? 'Edit Post' : 'Create New Post' %></h2>
             </div>
 
-            <form action="/publisher/<%= editing ? 'edit-post' : 'create-post' %>" method="POST">
+            <form action="/publisher/<%= editing ? 'edit-post' : 'create-post' %>" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="title">Title</label>
                     <input type ="hidden" name="id" value = "<%= editing ? blog._id : '' %>" > 
@@ -168,15 +170,15 @@
                             <option value="food">Food</option>
                         </select>
                     </div>
-                    <div class="form-group" style="flex: 1; min-width: 200px;">
-                        <label for="image">Cover Image URL</label>
-                        <input type="text" id="img" name="img"  value = "<%= editing ? blog.img : '' %>" placeholder="https://image-url.com/photo.jpg">
+                    <div class="form-group" style="flex: 1; min-width: 200px; margin-top: 8px; font-size: 10px">
+                        <label for="img"clss ="img" >Cover Image URL</label>
+                        <input type="file" id="img" name="img" accept ="image/jpg, image/jpeg, image/png" >
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="content">Write Content</label>
-                    <textarea id="content" name="content" placeholder="Once upon a time..."><%= editing ? blog.content : '' %></textarea>
+                    <textarea id="content" name="content" required placeholder="Once upon a time..."><%= editing ? blog.content : '' %></textarea>
                 </div>
 
                 <div class="actions">

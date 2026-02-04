@@ -18,7 +18,16 @@ export const getCreatePage = (req, res, next) => {
 
 export const postCreatePost = (req, res, next) => { 
     console.log("post create post")
-    const {title, category, img, content,createdAt ,publisher } = req.body
+    const {title, category,  content,createdAt ,publisher } = req.body
+    console.log(req.file)
+
+    if(!req.file){
+        return res.status(400).send('No image provided')
+    }
+
+const img = "/uploads/" + req.file.filename;
+    console.log("img is_ " , img)
+
     const blog = new Blog({title, category, img, content, createdAt, publisher: req.session.user._id})
     blog.save().then( () => {
         console.log("blog post saved")
@@ -44,13 +53,21 @@ export const getEditPost = (req, res, next) => {
 
 export const postEditPost = (req, res, next) => {
     
-    const { id, title,category, img, content} =req.body
+    const { id, title,category, content} =req.body
+    console.log(req.body);
 
     Blog.findById(id).then( (blog) => {
         blog.title = title,
         blog.category = category,
-        blog.img = img,
         blog.content = content
+ 
+        if(req.file){
+           if (req.file) {
+              blog.img = "/uploads/" + req.file.filename;
+           }
+
+        }
+
         blog.save().then((result) => {
             res.redirect('/publisher/publisher-dashboard');
         }).catch(err =>{

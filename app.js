@@ -3,6 +3,8 @@ import dotenv  from 'dotenv';
 import mongoose from 'mongoose';
 import session from 'express-session'
 import connectMongoDBSession from 'connect-mongodb-session'
+import multer from 'multer'
+import path from 'path'
 
 
 
@@ -18,7 +20,42 @@ const app = express();
 dotenv.config()  // environment variable load
 const MongoDBStore = connectMongoDBSession(session); //session store in mongodb
 
+const randomString = (length) => {
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    let result ='';
+    for(let i=0; i < length; i++){
+        result += characters.charAt(Math.floor(Math.random() * characters.length))
+    }
+    return result
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/");
+    },
+    filename: (req, file, cb) => {
+        cb(null, randomString(10)+ '-' +file.originalname)
+    }
+})
+
+const fileFilter = (req, file, cb) => {
+    if(file.mimetype === 'img/png' || file.mimetype === 'img/jpg' || file.mimetype === 'img/jpeg' ){
+        cb(null , true);
+    }else{
+        cb(null, false)
+    }
+}
+
+const multerOptions = {
+    storage, fileFilter
+};
+
 app.use(express.urlencoded()) // body parser middleware
+app.use(multer(multerOptions).single('img'))
+app.use("/uploads", express.static("uploads"));
+app.use("/read/uploads", express.static("uploads"));
+
+
 
 app.set('view engine', 'ejs')
 app.set('views', 'views')
