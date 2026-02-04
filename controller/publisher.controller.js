@@ -26,7 +26,6 @@ export const postCreatePost = (req, res, next) => {
     }
 
 const img = "/uploads/" + req.file.filename;
-    console.log("img is_ " , img)
 
     const blog = new Blog({title, category, img, content, createdAt, publisher: req.session.user._id})
     blog.save().then( () => {
@@ -43,7 +42,6 @@ export const getEditPost = (req, res, next) => {
     const editing = req.query.editing === 'true'
     
     Blog.findById(blogId).then((blog) => {
-         console.log("edit post and id is ", blogId)
          res.render('../views/publisher/createPage', {blog: blog, editing: editing, pageTitle: 'edit post', isLoggedIn:  req.session.isLoggedIn})
     }).catch( err => {
         console.log("error while fetching blog for edit ", err)
@@ -54,7 +52,6 @@ export const getEditPost = (req, res, next) => {
 export const postEditPost = (req, res, next) => {
     
     const { id, title,category, content} =req.body
-    console.log(req.body);
 
     Blog.findById(id).then( (blog) => {
         blog.title = title,

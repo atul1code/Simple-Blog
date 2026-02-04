@@ -11,7 +11,6 @@ export const getHomePage = (req, res , next) => {
  
 export const getReadBlog = (req, res, next) => {
     const blogID = req.params._id
-    console.log("read blog ", req.params)
     Blog.findById(blogID).populate("publisher", "firstName").then( (blog) =>{
         res.render('reader/readerPage', {blog})
         console.log(blog.img)
