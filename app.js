@@ -38,16 +38,10 @@ const storage = multer.diskStorage({
     }
 })
 
-const fileFilter = (req, file, cb) => {
-    if(file.mimetype === 'img/png' || file.mimetype === 'img/jpg' || file.mimetype === 'img/jpeg' ){
-        cb(null , true);
-    }else{
-        cb(null, false)
-    }
-}
+
 
 const multerOptions = {
-    storage, fileFilter
+    storage
 };
 
 app.use(express.urlencoded()) // body parser middleware
